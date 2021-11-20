@@ -3,10 +3,13 @@
 // autor. Demais consultas serão discriminadas abaixo em forma de link.
 
 import React from 'react';
+import { connect } from 'react-redux';
+import PropTypes from 'prop-types';
 import DataInputs from '../data/DataInputs';
 import DataButtons from '../data/DataButtons';
 import Input from '../components/Input';
 import Button from '../components/Button';
+import { setUserEmail } from '../reducers/user';
 
 class Login extends React.Component {
   constructor() {
@@ -31,9 +34,12 @@ class Login extends React.Component {
     }, this.enableButton);
   }
 
-  handleClick(event) {
-    event.preventDefault();
-    window.location.href = '/carteira';
+  handleClick() {
+    const { email } = this.state;
+    const { history, userEmail } = this.props;
+    userEmail({ email });
+    console.log({ email });
+    history.push('/carteira');
   }
 
   enableButton() {
@@ -93,4 +99,15 @@ class Login extends React.Component {
   }
 }
 
-export default Login;
+Login.propTypes = {
+  history: PropTypes.shape({
+    push: PropTypes.func.isRequired,
+  }).isRequired,
+  userEmail: PropTypes.func.isRequired,
+};
+
+const mapDispatchToProps = (dispatch) => ({
+  userEmail: (payload) => dispatch(setUserEmail(payload)),
+});
+
+export default connect(null, mapDispatchToProps)(Login);
