@@ -7,8 +7,8 @@ import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import DataInputs from '../data/DataInputs';
 import DataButtons from '../data/DataButtons';
-import Input from '../components/Input';
-import Button from '../components/Button';
+import Input from '../elements/Input';
+import Button from '../elements/Button';
 import { setUserEmail } from '../reducers/user';
 
 class Login extends React.Component {
