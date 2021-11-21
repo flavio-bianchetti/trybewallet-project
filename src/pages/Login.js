@@ -34,11 +34,11 @@ class Login extends React.Component {
     }, this.enableButton);
   }
 
-  handleClick() {
+  handleClick(event) {
+    event.preventDefault();
     const { email } = this.state;
     const { history, userEmail } = this.props;
     userEmail({ email });
-    console.log({ email });
     history.push('/carteira');
   }
 

@@ -33,4 +33,4 @@ const mapStateToProps = (state) => ({
   userEmail: state.user.email,
 });
 
-export default connect(mapStateToProps, null)(Header);
+export default connect(mapStateToProps)(Header);

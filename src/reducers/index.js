@@ -29,7 +29,6 @@ const walletReducer = (state = INITIAL_STATE, action) => {
       ...state,
       user: action.payload,
     };
-    console.log(action.payload);
     break;
   case USER_WALLET:
     result = {

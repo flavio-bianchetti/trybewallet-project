@@ -9,6 +9,12 @@ const DataButtons = [
     name: 'buttonLoginInput',
     value: 'Entrar',
   },
+  {
+    dataTestId: 'button-add-expense-input',
+    type: 'submit',
+    name: 'buttonAddExpenseInput',
+    value: 'Adicionar despesa',
+  },
 ];
 
 export default DataButtons;

@@ -17,6 +17,20 @@ const DataInputs = [
     placeholder: 'password',
     value: '',
   },
+  {
+    dataTestId: 'value-input',
+    type: 'number',
+    name: 'valueInput',
+    placeholder: 'valor',
+    value: '',
+  },
+  {
+    dataTestId: 'description-input',
+    type: 'text',
+    name: 'descriptionInput',
+    placeholder: 'descrição',
+    value: '',
+  },
 ];
 
 export default DataInputs;
