@@ -8,8 +8,8 @@
 // da Trybe, consultas às documentações oficiais e com conhecimentos prévios do
 // autor. Demais consultas serão discriminadas abaixo em forma de link.
 
-import { USER_EMAIL } from './user';
-import { USER_WALLET } from './wallet';
+import USER_EMAIL from './user';
+import { USER_WALLET_CURRENCIES, USER_WALLET_EXPENSES } from './wallet';
 
 const INITIAL_STATE = ({
   user: {
@@ -19,6 +19,7 @@ const INITIAL_STATE = ({
     currencies: [],
     expenses: [],
   },
+  totalExpenses: '0',
 });
 
 const walletReducer = (state = INITIAL_STATE, action) => {
@@ -30,10 +31,26 @@ const walletReducer = (state = INITIAL_STATE, action) => {
       user: action.payload,
     };
     break;
-  case USER_WALLET:
+  case USER_WALLET_CURRENCIES:
     result = {
       ...state,
-      wallet: action.payload,
+      wallet: {
+        currencies: action.payload,
+        expenses: state.wallet.expenses,
+      },
+    };
+    break;
+  case USER_WALLET_EXPENSES:
+    result = {
+      ...state,
+      wallet: {
+        currencies: state.wallet.currencies,
+        expenses: [
+          ...state.wallet.expenses,
+          action.payload.expense,
+        ],
+      },
+      totalExpenses: action.payload.total,
     };
     break;
   default:

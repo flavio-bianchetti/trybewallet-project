@@ -4,9 +4,5 @@
 // da Trybe, consultas às documentações oficiais e com conhecimentos prévios do
 // autor. Demais consultas serão discriminadas abaixo em forma de link.
 
-export const USER_WALLET = 'USER_WALLET';
-
-export const setUserWallet = (payload) => ({
-  type: USER_WALLET,
-  payload,
-});
+export const USER_WALLET_CURRENCIES = 'USER_WALLET_CURRENCIES';
+export const USER_WALLET_EXPENSES = 'USER_WALLET_EXPENSES';

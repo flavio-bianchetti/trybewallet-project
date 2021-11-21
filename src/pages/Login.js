@@ -9,7 +9,7 @@ import DataInputs from '../data/DataInputs';
 import DataButtons from '../data/DataButtons';
 import Input from '../elements/Input';
 import Button from '../elements/Button';
-import { setUserEmail } from '../reducers/user';
+import { setUserEmail } from '../actions';
 
 class Login extends React.Component {
   constructor() {
