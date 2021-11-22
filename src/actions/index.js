@@ -12,12 +12,19 @@ export const setUserEmail = (payload) => ({
   payload,
 });
 
-export const setUserWalletCurrencies = (payload) => ({
+const setWalletCurrencies = (payload) => ({
   type: USER_WALLET_CURRENCIES,
   payload,
 });
 
-export const setUserWalletExpenses = (payload) => ({
+export const setWalletExpenses = (payload) => ({
   type: USER_WALLET_EXPENSES,
   payload,
 });
+
+export function fetchExchangeRates() {
+  return (dispatch) => fetch('https://economia.awesomeapi.com.br/json/all')
+    .then((response) => response.json())
+    .then((payload) => dispatch(setWalletCurrencies(payload)))
+    .catch((err) => console.log(err));
+}

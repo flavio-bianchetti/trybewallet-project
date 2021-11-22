@@ -23,6 +23,7 @@ class Select extends React.Component {
           values.map((value, index) => (
             <option
               key={ index }
+              data-testid={ value }
               value={ value }
             >
               { value }

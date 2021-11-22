@@ -6,7 +6,7 @@ const DataSelect = [
   {
     dataTestId: 'currency-input',
     name: 'currencyInput',
-    values: ['BRL', 'USD'],
+    values: [],
   },
   {
     dataTestId: 'method-input',

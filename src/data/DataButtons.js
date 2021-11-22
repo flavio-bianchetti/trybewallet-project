@@ -11,7 +11,7 @@ const DataButtons = [
   },
   {
     dataTestId: 'button-add-expense-input',
-    type: 'submit',
+    type: 'button',
     name: 'buttonAddExpenseInput',
     value: 'Adicionar despesa',
   },

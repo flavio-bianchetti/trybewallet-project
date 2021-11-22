@@ -11,7 +11,7 @@ import Button from '../elements/Button';
 import DataInputs from '../data/DataInputs';
 import DataSelect from '../data/DataSelect';
 import DataButtons from '../data/DataButtons';
-import { setUserWalletExpenses } from '../actions/index';
+import { setWalletExpenses, fetchExchangeRates } from '../actions/index';
 
 class Form extends React.Component {
   constructor() {
@@ -21,19 +21,20 @@ class Form extends React.Component {
       totalExpenses: '0',
       valueInput: '0',
       descriptionInput: '',
-      currencyInput: '',
-      methodInput: '',
-      tagInput: '',
+      currencyInput: 'USD',
+      methodInput: 'Dinheiro',
+      tagInput: 'Alimentação',
     };
 
     this.handleChange = this.handleChange.bind(this);
     this.handleClick = this.handleClick.bind(this);
+    this.updateCurrencyInput = this.updateCurrencyInput.bind(this);
   }
 
-  // ao carregar a página, pegar as moedas.
-  // componentDidMount() {
-
-  // }
+  componentDidMount() {
+    const { setExchangeRates } = this.props;
+    setExchangeRates();
+  }
 
   handleChange(event) {
     event.preventDefault();
@@ -43,7 +44,6 @@ class Form extends React.Component {
     });
   }
 
-  // clicar no botão adicionar, gravar no store.
   handleClick(event) {
     event.preventDefault();
     const {
@@ -56,6 +56,9 @@ class Form extends React.Component {
       tagInput,
     } = this.state;
 
+    const { currencies, setExpense } = this.props;
+    console.log(currencies);
+
     const expense = {
       id: idExpense,
       value: valueInput,
@@ -63,9 +66,9 @@ class Form extends React.Component {
       currency: currencyInput,
       method: methodInput,
       tag: tagInput,
+      exchangesRates: currencies,
     };
 
-    const { setExpense } = this.props;
     const total = Number(totalExpenses) + Number(valueInput);
     setExpense({ expense, total });
     this.setState({
@@ -74,11 +77,22 @@ class Form extends React.Component {
     });
   }
 
+  updateCurrencyInput() {
+    const { currencies } = this.props;
+    DataSelect[0].values = Object.keys(currencies);
+    const indexRemove = DataSelect[0].values.indexOf('USDT');
+    const validate = -1;
+    if (indexRemove > validate) {
+      DataSelect[0].values.splice(indexRemove, 1);
+    }
+  }
+
   render() {
     const {
       valueInput,
       descriptionInput,
     } = this.state;
+    this.updateCurrencyInput();
     return (
       <fieldset>
         <Input
@@ -125,10 +139,17 @@ class Form extends React.Component {
 
 Form.propTypes = {
   setExpense: PropTypes.func.isRequired,
+  setExchangeRates: PropTypes.func.isRequired,
+  currencies: PropTypes.objectOf(PropTypes.string).isRequired,
 };
 
 const mapDispatchToProps = (dispatch) => ({
-  setExpense: (payload) => dispatch(setUserWalletExpenses(payload)),
+  setExpense: (payload) => dispatch(setWalletExpenses(payload)),
+  setExchangeRates: () => dispatch(fetchExchangeRates()),
 });
 
-export default connect(null, mapDispatchToProps)(Form);
+const mapStateToProps = (state) => ({
+  currencies: state.wallet.currencies,
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(Form);
