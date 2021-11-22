@@ -73,7 +73,7 @@ class Form extends React.Component {
     const valueAsk = expense.exchangeRates[currencyInput].ask;
 
     const total = Number(totalExpenses)
-      + (Number(valueInput) * Number(valueAsk)).toFixed(2);
+      + Number((Number(valueInput) * Number(valueAsk)).toFixed(2));
     setExpense({ expense, total });
     this.setState({
       idExpense: Number(idExpense) + 1,
