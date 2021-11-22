@@ -35,7 +35,11 @@ class Table extends React.Component {
                 <td>{ expense.method }</td>
                 <td>{ expense.value }</td>
                 <td>{ (expense.exchangeRates[expense.currency].name).split('/')[0] }</td>
-                <td>{ `${Number(expense.exchangeRates[expense.currency].ask).toFixed(2)}` }</td>
+                <td>
+                  {
+                    `${Number(expense.exchangeRates[expense.currency].ask).toFixed(2)}`
+                  }
+                </td>
                 <td>
                   {
                     `${(Number(expense.exchangeRates[expense.currency].ask)
