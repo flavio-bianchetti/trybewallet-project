@@ -67,7 +67,6 @@ class Login extends React.Component {
     } = this.state;
     return (
       <div>
-        Login:
         <Input
           dataTestId={ DataInputs[0].dataTestId }
           type={ DataInputs[0].type }
@@ -76,6 +75,7 @@ class Login extends React.Component {
           value={ email }
           onChange={ this.handleChange }
           isDisabled={ false }
+          label={ DataInputs[0].label }
         />
         <Input
           dataTestId={ DataInputs[1].dataTestId }
@@ -85,6 +85,7 @@ class Login extends React.Component {
           value={ passwordInput }
           onChange={ this.handleChange }
           isDisabled={ false }
+          label={ DataInputs[1].label }
         />
         <Button
           dataTestId={ DataButtons[0].dataTestId }

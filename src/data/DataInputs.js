@@ -9,6 +9,7 @@ const DataInputs = [
     name: 'email',
     placeholder: 'e-mail',
     value: '',
+    label: 'E-mail: ',
   },
   {
     dataTestId: 'password-input',
@@ -16,6 +17,7 @@ const DataInputs = [
     name: 'passwordInput',
     placeholder: 'password',
     value: '',
+    label: 'Senha: ',
   },
   {
     dataTestId: 'value-input',
@@ -23,6 +25,7 @@ const DataInputs = [
     name: 'valueInput',
     placeholder: 'valor',
     value: '',
+    label: 'Valor: ',
   },
   {
     dataTestId: 'description-input',
@@ -30,6 +33,7 @@ const DataInputs = [
     name: 'descriptionInput',
     placeholder: 'descrição',
     value: '',
+    label: 'Descrição: ',
   },
 ];
 

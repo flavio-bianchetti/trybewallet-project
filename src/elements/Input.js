@@ -15,17 +15,22 @@ class Input extends React.Component {
       value,
       isDisabled,
       onChange,
+      label,
     } = this.props;
     return (
-      <input
-        data-testid={ dataTestId }
-        name={ name }
-        type={ type }
-        placeholder={ placeholder }
-        value={ value }
-        disabled={ isDisabled }
-        onChange={ onChange }
-      />
+      <label htmlFor={ name }>
+        { label }
+        <input
+          data-testid={ dataTestId }
+          name={ name }
+          id={ name }
+          type={ type }
+          placeholder={ placeholder }
+          value={ value }
+          disabled={ isDisabled }
+          onChange={ onChange }
+        />
+      </label>
     );
   }
 }
@@ -38,6 +43,7 @@ Input.propTypes = {
   value: PropTypes.string.isRequired,
   isDisabled: PropTypes.bool.isRequired,
   onChange: PropTypes.func.isRequired,
+  label: PropTypes.string.isRequired,
 };
 
 export default Input;

@@ -7,16 +7,19 @@ const DataSelect = [
     dataTestId: 'currency-input',
     name: 'currencyInput',
     values: [],
+    label: 'Moeda: ',
   },
   {
     dataTestId: 'method-input',
     name: 'methodInput',
     values: ['Dinheiro', 'Cartão de crédito', 'Cartão de débito'],
+    label: 'Método de Pagamento: ',
   },
   {
     dataTestId: 'tag-input',
     name: 'tagInput',
     values: ['Alimentação', 'Lazer', 'Trabalho', 'Transporte', 'Saúde'],
+    label: 'Tag: ',
   },
 ];
 

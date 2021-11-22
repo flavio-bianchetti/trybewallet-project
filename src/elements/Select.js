@@ -12,25 +12,30 @@ class Select extends React.Component {
       name,
       values,
       onChange,
+      label,
     } = this.props;
     return (
-      <select
-        data-testid={ dataTestId }
-        name={ name }
-        onChange={ onChange }
-      >
-        {
-          values.map((value, index) => (
-            <option
-              key={ index }
-              data-testid={ value }
-              value={ value }
-            >
-              { value }
-            </option>
-          ))
-        }
-      </select>
+      <label htmlFor={ name }>
+        { label }
+        <select
+          data-testid={ dataTestId }
+          name={ name }
+          id={ name }
+          onChange={ onChange }
+        >
+          {
+            values.map((value, index) => (
+              <option
+                key={ index }
+                data-testid={ value }
+                value={ value }
+              >
+                { value }
+              </option>
+            ))
+          }
+        </select>
+      </label>
     );
   }
 }
@@ -40,6 +45,7 @@ Select.propTypes = {
   name: PropTypes.string.isRequired,
   values: PropTypes.arrayOf(PropTypes.string).isRequired,
   onChange: PropTypes.func.isRequired,
+  label: PropTypes.string.isRequired,
 };
 
 export default Select;

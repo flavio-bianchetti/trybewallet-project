@@ -34,15 +34,15 @@ class Table extends React.Component {
                 <td>{ expense.tag }</td>
                 <td>{ expense.method }</td>
                 <td>{ expense.value }</td>
-                <td>{ expense.currency }</td>
-                <td>{ expense.exchangeRates[expense.currency].ask }</td>
+                <td>{ (expense.exchangeRates[expense.currency].name).split('/')[0] }</td>
+                <td>{ `${Number(expense.exchangeRates[expense.currency].ask).toFixed(2)}` }</td>
                 <td>
                   {
-                    `${Number(expense.exchangeRates[expense.currency].ask)
-                    * Number(expense.value)}`
+                    `${(Number(expense.exchangeRates[expense.currency].ask)
+                    * Number(expense.value)).toFixed(2)}`
                   }
                 </td>
-                <td>{ expense.exchangeRates[expense.currency].name }</td>
+                <td>Real</td>
                 <td>editar excluir</td>
               </tr>
             ))
