@@ -29,6 +29,7 @@ class Form extends React.Component {
     this.handleChange = this.handleChange.bind(this);
     this.handleClick = this.handleClick.bind(this);
     this.updateCurrencyInput = this.updateCurrencyInput.bind(this);
+    this.removeCurrenciesNotValid = this.removeCurrenciesNotValid.bind(this);
   }
 
   componentDidMount() {
@@ -57,19 +58,20 @@ class Form extends React.Component {
     } = this.state;
 
     const { currencies, setExpense } = this.props;
-    console.log(currencies);
 
     const expense = {
-      id: idExpense,
+      id: Number(idExpense),
       value: valueInput,
       description: descriptionInput,
       currency: currencyInput,
       method: methodInput,
       tag: tagInput,
-      exchangesRates: currencies,
+      exchangeRates: this.removeCurrenciesNotValid(currencies),
     };
 
-    const total = Number(totalExpenses) + Number(valueInput);
+    const valueAsk = expense.exchangeRates[currencyInput].ask;
+
+    const total = Number(totalExpenses) + (Number(valueInput) * Number(valueAsk));
     setExpense({ expense, total });
     this.setState({
       idExpense: Number(idExpense) + 1,
@@ -79,12 +81,16 @@ class Form extends React.Component {
 
   updateCurrencyInput() {
     const { currencies } = this.props;
-    DataSelect[0].values = Object.keys(currencies);
-    const indexRemove = DataSelect[0].values.indexOf('USDT');
-    const validate = -1;
-    if (indexRemove > validate) {
-      DataSelect[0].values.splice(indexRemove, 1);
-    }
+    DataSelect[0].values = Object.keys(this.removeCurrenciesNotValid(currencies));
+  }
+
+  removeCurrenciesNotValid(object) {
+    // Solução abaixo foi relembrada através do link:
+    // https://www.w3schools.com/howto/howto_js_remove_property_object.asp
+    const newObject = { ...object };
+    delete newObject.USDT;
+    delete newObject.DOGE;
+    return newObject;
   }
 
   render() {
@@ -140,7 +146,8 @@ class Form extends React.Component {
 Form.propTypes = {
   setExpense: PropTypes.func.isRequired,
   setExchangeRates: PropTypes.func.isRequired,
-  currencies: PropTypes.objectOf(PropTypes.string).isRequired,
+  // warning na linha abaixo será tratado antes da entrega final.
+  currencies: PropTypes.arrayOf(PropTypes.any).isRequired,
 };
 
 const mapDispatchToProps = (dispatch) => ({

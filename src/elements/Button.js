@@ -5,7 +5,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-class LinkButton extends React.Component {
+class Button extends React.Component {
   render() {
     const {
       dataTestId,
@@ -28,7 +28,7 @@ class LinkButton extends React.Component {
   }
 }
 
-LinkButton.propTypes = {
+Button.propTypes = {
   dataTestId: PropTypes.string.isRequired,
   name: PropTypes.string.isRequired,
   type: PropTypes.string.isRequired,
@@ -37,4 +37,4 @@ LinkButton.propTypes = {
   onClick: PropTypes.func.isRequired,
 };
 
-export default LinkButton;
+export default Button;
