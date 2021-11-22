@@ -57,7 +57,8 @@ class Form extends React.Component {
       tagInput,
     } = this.state;
 
-    const { currencies, setExpense } = this.props;
+    const { currencies, setExpense, setExchangeRates } = this.props;
+    setExchangeRates();
 
     const expense = {
       id: Number(idExpense),
@@ -66,7 +67,7 @@ class Form extends React.Component {
       currency: currencyInput,
       method: methodInput,
       tag: tagInput,
-      exchangeRates: this.removeCurrenciesNotValid(currencies),
+      exchangeRates: currencies,
     };
 
     const valueAsk = expense.exchangeRates[currencyInput].ask;
@@ -77,6 +78,7 @@ class Form extends React.Component {
     this.setState({
       idExpense: Number(idExpense) + 1,
       totalExpenses: total,
+      valueInput: '0',
     });
   }
 

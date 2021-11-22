@@ -8,14 +8,14 @@ import PropTypes from 'prop-types';
 
 class Header extends React.Component {
   render() {
-    const { userEmail, totalExpenses = 0 } = this.props;
+    const { userEmail, totalExpenses } = this.props;
     return (
       <header>
         <span data-testid="email-field">
           { userEmail }
         </span>
         <span data-testid="total-field">
-          { totalExpenses }
+          { totalExpenses || 0 }
         </span>
         <span data-testid="header-currency-field">
           { ' BRL' }

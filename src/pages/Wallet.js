@@ -18,11 +18,11 @@ class Wallet extends React.Component {
       //   {
       //     userEmail.length > 0
       //       ? (
-      <div>
+      <section>
         <Header />
         <Form />
         <Table />
-      </div>
+      </section>
       //       )
       //       : <Redirect to="/" />
       //   }

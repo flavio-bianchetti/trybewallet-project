@@ -8,7 +8,7 @@ import PropTypes from 'prop-types';
 
 class Table extends React.Component {
   render() {
-    const { expenses } = this.props;
+    const { getExpenses } = this.props;
     return (
       <table>
         <thead>
@@ -26,7 +26,7 @@ class Table extends React.Component {
         </thead>
         <tbody>
           {
-            expenses.map((expense, index) => (
+            getExpenses.map((expense, index) => (
               <tr
                 key={ index }
               >
@@ -58,11 +58,11 @@ class Table extends React.Component {
 }
 
 Table.propTypes = {
-  expenses: PropTypes.arrayOf(PropTypes.any).isRequired,
+  getExpenses: PropTypes.arrayOf(PropTypes.any).isRequired,
 };
 
 const mapStateToProps = (state) => ({
-  expenses: state.wallet.expenses,
+  getExpenses: state.wallet.expenses,
 });
 
-export default connect(mapStateToProps)(Table);
+export default connect(mapStateToProps, null)(Table);
