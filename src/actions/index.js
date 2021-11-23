@@ -5,7 +5,12 @@
 // autor. Demais consultas serão discriminadas abaixo em forma de link.
 
 import USER_EMAIL from '../reducers/user';
-import { USER_WALLET_CURRENCIES, USER_WALLET_EXPENSES } from '../reducers/wallet';
+import {
+  USER_WALLET_CURRENCIES,
+  USER_WALLET_EXPENSES,
+  USER_ALL_WALLET_EXPENSES,
+  USER_TOTAL_EXPENSES,
+} from '../reducers/wallet';
 
 export const setUserEmail = (payload) => ({
   type: USER_EMAIL,
@@ -19,6 +24,16 @@ const setWalletCurrencies = (payload) => ({
 
 export const setWalletExpenses = (payload) => ({
   type: USER_WALLET_EXPENSES,
+  payload,
+});
+
+export const setAllWalletExpenses = (payload) => ({
+  type: USER_ALL_WALLET_EXPENSES,
+  payload,
+});
+
+export const setTotalExpenses = (payload) => ({
+  type: USER_TOTAL_EXPENSES,
   payload,
 });
 

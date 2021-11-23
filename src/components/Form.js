@@ -18,7 +18,6 @@ class Form extends React.Component {
     super();
     this.state = {
       idExpense: '0',
-      totalExpenses: '0',
       valueInput: '0',
       descriptionInput: '',
       currencyInput: 'USD',
@@ -49,7 +48,6 @@ class Form extends React.Component {
     event.preventDefault();
     const {
       idExpense,
-      totalExpenses,
       valueInput,
       descriptionInput,
       currencyInput,
@@ -57,7 +55,7 @@ class Form extends React.Component {
       tagInput,
     } = this.state;
 
-    const { currencies, setExpense, setExchangeRates } = this.props;
+    const { currencies, setExpense, setExchangeRates, getTotalExpenses } = this.props;
     setExchangeRates();
 
     const expense = {
@@ -72,12 +70,11 @@ class Form extends React.Component {
 
     const valueAsk = expense.exchangeRates[currencyInput].ask;
 
-    const total = Number(totalExpenses)
+    const total = Number(getTotalExpenses)
       + Number((Number(valueInput) * Number(valueAsk)).toFixed(2));
     setExpense({ expense, total });
     this.setState({
       idExpense: Number(idExpense) + 1,
-      totalExpenses: total,
       valueInput: '0',
     });
   }
@@ -151,6 +148,7 @@ Form.propTypes = {
   setExchangeRates: PropTypes.func.isRequired,
   // warning na linha abaixo será tratado antes da entrega final.
   currencies: PropTypes.arrayOf(PropTypes.any).isRequired,
+  getTotalExpenses: PropTypes.number.isRequired,
 };
 
 const mapDispatchToProps = (dispatch) => ({
@@ -160,6 +158,7 @@ const mapDispatchToProps = (dispatch) => ({
 
 const mapStateToProps = (state) => ({
   currencies: state.wallet.currencies,
+  getTotalExpenses: state.totalExpenses,
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(Form);

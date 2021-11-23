@@ -5,17 +5,41 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
+import { setTotalExpenses } from '../actions/index';
 
 class Header extends React.Component {
+  constructor() {
+    super();
+
+    this.newTotalExpenses = this.newTotalExpenses.bind(this);
+  }
+
+  newTotalExpenses() {
+    const { getExpenses, updateTotalExpenses } = this.props;
+    let totalExpenses = 0;
+    if (getExpenses.length > 0) {
+      totalExpenses = getExpenses.reduce(
+        (acc, expense) => acc
+        + Number((Number(expense.value)
+        * Number(expense.exchangeRates[expense.currency].ask)).toFixed(2)),
+        0,
+      );
+    }
+    updateTotalExpenses({
+      total: totalExpenses,
+    });
+    return totalExpenses;
+  }
+
   render() {
-    const { userEmail, totalExpenses } = this.props;
+    const { userEmail, getTotalExpenses } = this.props;
     return (
       <header>
         <span data-testid="email-field">
           { userEmail }
         </span>
         <span data-testid="total-field">
-          { totalExpenses || 0 }
+          { getTotalExpenses !== undefined ? getTotalExpenses : this.newTotalExpenses() }
         </span>
         <span data-testid="header-currency-field">
           { ' BRL' }
@@ -27,12 +51,19 @@ class Header extends React.Component {
 
 Header.propTypes = {
   userEmail: PropTypes.string.isRequired,
-  totalExpenses: PropTypes.string.isRequired,
+  getExpenses: PropTypes.arrayOf(PropTypes.any).isRequired,
+  getTotalExpenses: PropTypes.number.isRequired,
+  updateTotalExpenses: PropTypes.func.isRequired,
 };
 
 const mapStateToProps = (state) => ({
   userEmail: state.user.email,
-  totalExpenses: state.totalExpenses,
+  getExpenses: state.wallet.expenses,
+  getTotalExpenses: state.totalExpenses,
 });
 
-export default connect(mapStateToProps)(Header);
+const mapDispatchToProps = (dispatch) => ({
+  updateTotalExpenses: (payload) => dispatch(setTotalExpenses(payload)),
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(Header);

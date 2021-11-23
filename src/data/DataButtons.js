@@ -15,6 +15,18 @@ const DataButtons = [
     name: 'buttonAddExpenseInput',
     value: 'Adicionar despesa',
   },
+  {
+    dataTestId: 'delete-btn',
+    type: 'button',
+    name: 'deleteBtn',
+    value: 'Remover',
+  },
+  {
+    dataTestId: 'edit-btn',
+    type: 'button',
+    name: 'editBtn',
+    value: 'Editar despesa',
+  },
 ];
 
 export default DataButtons;

@@ -5,11 +5,89 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
+import Button from '../elements/Button';
+import DataButtons from '../data/DataButtons';
+import { setAllWalletExpenses } from '../actions/index';
 
 class Table extends React.Component {
+  constructor() {
+    super();
+
+    this.renderRowTable = this.renderRowTable.bind(this);
+    this.handleClick = this.handleClick.bind(this);
+  }
+
+  handleClick(event) {
+    event.preventDefault();
+    const { name } = event.target;
+    const { getExpenses, getTotalExpenses, setNewExpenses } = this.props;
+    const selectedExpense = getExpenses.find(
+      (expense) => expense.id === Number(name),
+    );
+    const valueDecreased = Number(
+      (
+        Number(selectedExpense.value)
+          * Number(selectedExpense.exchangeRates[selectedExpense.currency].ask)
+      ).toFixed(2),
+    );
+
+    const newExpenses = getExpenses.filter(
+      (expense) => expense.id !== Number(name),
+    );
+
+    setNewExpenses({
+      expenses: newExpenses,
+      total: Number(getTotalExpenses) - valueDecreased,
+    });
+  }
+
+  renderRowTable(getExpenses) {
+    return (
+      <tbody>
+        {
+          getExpenses.map((expense) => (
+            <tr
+              key={ expense.id }
+            >
+              <td>{ expense.description }</td>
+              <td>{ expense.tag }</td>
+              <td>{ expense.method }</td>
+              <td>{ expense.value }</td>
+              <td>{ (expense.exchangeRates[expense.currency].name).split('/')[0] }</td>
+              <td>
+                {
+                  `${Number(expense.exchangeRates[expense.currency].ask).toFixed(2)}`
+                }
+              </td>
+              <td>
+                {
+                  `${(Number(expense.exchangeRates[expense.currency].ask)
+                  * Number(expense.value)).toFixed(2)}`
+                }
+              </td>
+              <td>Real</td>
+              <td>
+                <Button
+                  dataTestId={ DataButtons[2].dataTestId }
+                  type={ DataButtons[2].type }
+                  name={ expense.id }
+                  value={ DataButtons[2].value }
+                  onClick={ this.handleClick }
+                  isDisabled={ false }
+                />
+              </td>
+            </tr>
+          ))
+        }
+      </tbody>
+    );
+  }
+
   render() {
     const { getExpenses } = this.props;
     return (
+      // A estrutura de Table foi relembrada neste link:
+      // https://www.w3schools.com/html/html_tables.asp
       <table>
         <thead>
           <tr>
@@ -24,34 +102,7 @@ class Table extends React.Component {
             <th>Editar/Excluir</th>
           </tr>
         </thead>
-        <tbody>
-          {
-            getExpenses.map((expense, index) => (
-              <tr
-                key={ index }
-              >
-                <td>{ expense.description }</td>
-                <td>{ expense.tag }</td>
-                <td>{ expense.method }</td>
-                <td>{ expense.value }</td>
-                <td>{ (expense.exchangeRates[expense.currency].name).split('/')[0] }</td>
-                <td>
-                  {
-                    `${Number(expense.exchangeRates[expense.currency].ask).toFixed(2)}`
-                  }
-                </td>
-                <td>
-                  {
-                    `${(Number(expense.exchangeRates[expense.currency].ask)
-                    * Number(expense.value)).toFixed(2)}`
-                  }
-                </td>
-                <td>Real</td>
-                <td>editar excluir</td>
-              </tr>
-            ))
-          }
-        </tbody>
+        { this.renderRowTable(getExpenses) }
       </table>
     );
   }
@@ -59,10 +110,17 @@ class Table extends React.Component {
 
 Table.propTypes = {
   getExpenses: PropTypes.arrayOf(PropTypes.any).isRequired,
+  getTotalExpenses: PropTypes.number.isRequired,
+  setNewExpenses: PropTypes.func.isRequired,
 };
 
 const mapStateToProps = (state) => ({
   getExpenses: state.wallet.expenses,
+  getTotalExpenses: state.totalExpenses,
 });
 
-export default connect(mapStateToProps, null)(Table);
+const mapDispatchToProps = (dispatch) => ({
+  setNewExpenses: (payload) => dispatch(setAllWalletExpenses(payload)),
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(Table);

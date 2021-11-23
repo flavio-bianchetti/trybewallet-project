@@ -9,7 +9,12 @@
 // autor. Demais consultas serão discriminadas abaixo em forma de link.
 
 import USER_EMAIL from './user';
-import { USER_WALLET_CURRENCIES, USER_WALLET_EXPENSES } from './wallet';
+import {
+  USER_WALLET_CURRENCIES,
+  USER_WALLET_EXPENSES,
+  USER_ALL_WALLET_EXPENSES,
+  USER_TOTAL_EXPENSES,
+} from './wallet';
 
 const INITIAL_STATE = ({
   user: {
@@ -19,7 +24,7 @@ const INITIAL_STATE = ({
     currencies: [],
     expenses: [],
   },
-  totalExpenses: '0',
+  totalExpenses: 0,
 });
 
 const walletReducer = (state = INITIAL_STATE, action) => {
@@ -29,8 +34,7 @@ const walletReducer = (state = INITIAL_STATE, action) => {
     result = {
       ...state,
       user: action.payload,
-    };
-    break;
+    }; break;
   case USER_WALLET_CURRENCIES:
     result = {
       ...state,
@@ -38,8 +42,7 @@ const walletReducer = (state = INITIAL_STATE, action) => {
         currencies: action.payload,
         expenses: state.wallet.expenses,
       },
-    };
-    break;
+    }; break;
   case USER_WALLET_EXPENSES:
     result = {
       ...state,
@@ -51,10 +54,22 @@ const walletReducer = (state = INITIAL_STATE, action) => {
         ],
       },
       totalExpenses: action.payload.total,
-    };
-    break;
-  default:
-    result = state;
+    }; break;
+  case USER_ALL_WALLET_EXPENSES:
+    result = {
+      ...state,
+      wallet: {
+        currencies: state.wallet.currencies,
+        expenses: action.payload.expenses,
+      },
+      totalExpenses: action.payload.total,
+    }; break;
+  case USER_TOTAL_EXPENSES:
+    result = {
+      ...state,
+      totalExpenses: action.payload.total,
+    }; break;
+  default: result = state;
   }
   return result;
 };
