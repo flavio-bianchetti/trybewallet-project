@@ -9,8 +9,8 @@ import {
   USER_WALLET_CURRENCIES,
   USER_WALLET_EXPENSES,
   USER_ALL_WALLET_EXPENSES,
-  USER_TOTAL_EXPENSES,
 } from '../reducers/wallet';
+import TOTAL_EXPENSES from '../reducers/total';
 
 export const setUserEmail = (payload) => ({
   type: USER_EMAIL,
@@ -33,7 +33,7 @@ export const setAllWalletExpenses = (payload) => ({
 });
 
 export const setTotalExpenses = (payload) => ({
-  type: USER_TOTAL_EXPENSES,
+  type: TOTAL_EXPENSES,
   payload,
 });
 

@@ -41,7 +41,7 @@ class Table extends React.Component {
     });
   }
 
-  renderRowTable(getExpenses) {
+  renderRowTable(getExpenses, handleEditClick) {
     return (
       <tbody>
         {
@@ -68,6 +68,14 @@ class Table extends React.Component {
               <td>Real</td>
               <td>
                 <Button
+                  dataTestId={ DataButtons[3].dataTestId }
+                  type={ DataButtons[3].type }
+                  name={ expense.id }
+                  value={ DataButtons[3].value }
+                  onClick={ handleEditClick }
+                  isDisabled={ false }
+                />
+                <Button
                   dataTestId={ DataButtons[2].dataTestId }
                   type={ DataButtons[2].type }
                   name={ expense.id }
@@ -84,7 +92,7 @@ class Table extends React.Component {
   }
 
   render() {
-    const { getExpenses } = this.props;
+    const { getExpenses, handleEditClick } = this.props;
     return (
       // A estrutura de Table foi relembrada neste link:
       // https://www.w3schools.com/html/html_tables.asp
@@ -102,7 +110,7 @@ class Table extends React.Component {
             <th>Editar/Excluir</th>
           </tr>
         </thead>
-        { this.renderRowTable(getExpenses) }
+        { this.renderRowTable(getExpenses, handleEditClick) }
       </table>
     );
   }
@@ -112,6 +120,7 @@ Table.propTypes = {
   getExpenses: PropTypes.arrayOf(PropTypes.any).isRequired,
   getTotalExpenses: PropTypes.number.isRequired,
   setNewExpenses: PropTypes.func.isRequired,
+  handleEditClick: PropTypes.func.isRequired,
 };
 
 const mapStateToProps = (state) => ({
@@ -121,6 +130,7 @@ const mapStateToProps = (state) => ({
 
 const mapDispatchToProps = (dispatch) => ({
   setNewExpenses: (payload) => dispatch(setAllWalletExpenses(payload)),
+  // changingId: (payload) => dispatch(setChangingId(payload)),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(Table);
