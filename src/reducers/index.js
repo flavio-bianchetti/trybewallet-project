@@ -46,7 +46,7 @@ const userWalletExpenses = (state, action) => ({
     currencies: state.wallet.currencies,
     expenses: [
       ...state.wallet.expenses,
-      action.payload.expense,
+      action.payload.expenses,
     ],
   },
   totalExpenses: action.payload.total,
