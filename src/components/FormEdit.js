@@ -11,12 +11,12 @@ import Button from '../elements/Button';
 import DataInputs from '../data/DataInputs';
 import DataSelect from '../data/DataSelect';
 import DataButtons from '../data/DataButtons';
+import { setAllWalletExpenses } from '../actions/index';
 
-class Form extends React.Component {
+class FormEdit extends React.Component {
   constructor() {
     super();
     this.state = {
-      idExpense: -1,
       valueInput: '0',
       descriptionInput: '',
       currencyInput: 'USD',
@@ -24,26 +24,27 @@ class Form extends React.Component {
       tagInput: 'Alimentação',
     };
 
+    this.getTotalExpenses = this.getTotalExpenses.bind(this);
     this.handleChange = this.handleChange.bind(this);
     this.handleClick = this.handleClick.bind(this);
+    this.updateCurrencyInput = this.updateCurrencyInput.bind(this);
     this.removeCurrenciesNotValid = this.removeCurrenciesNotValid.bind(this);
-    this.setFieldsForEdit = this.setFieldsForEdit.bind(this);
+    this.updateFields = this.updateFields.bind(this);
   }
 
   componentDidMount() {
-    this.setFieldsForEdit();
+    this.updateFields();
   }
 
-  setFieldsForEdit() {
-    const { id, value, description, currency, method, tag } = this.props;
-    this.setState({
-      idExpense: id,
-      valueInput: value,
-      descriptionInput: description,
-      currencyInput: currency,
-      methodInput: method,
-      tagInput: tag,
-    });
+  getTotalExpenses() {
+    const { getWallet } = this.props;
+    const { expenses } = getWallet;
+    const totalExpenses = expenses.reduce(
+      (acc, expense) => acc + Number((Number(expense.value)
+      * Number(expense.exchangeRates[expense.currency].ask)).toFixed(2)),
+      0,
+    );
+    return totalExpenses;
   }
 
   handleChange(event) {
@@ -65,42 +66,37 @@ class Form extends React.Component {
       tagInput,
     } = this.state;
 
-    const { getExpenses, getTotalExpenses } = this.props;
+    const { getWallet, setAllExpense } = this.props;
+    const { expenses, currencies } = getWallet;
 
-    const selectedExpense = getExpenses.find(
-      (expense) => expense.id === idExpense,
-    );
+    const selectedExpense = expenses.find((expense) => expense.id === idExpense);
+    const { exchangeRates } = selectedExpense;
 
-    let valueAsk = selectedExpense.exchangeRates[selectedExpense.currency].ask;
-
-    const total = Number(getTotalExpenses)
-    - Number((Number(selectedExpense.value)
-    * Number(valueAsk)).toFixed(2));
-
-    const changedExpense = {
+    const newExpense = {
       id: Number(idExpense),
       value: valueInput,
       description: descriptionInput,
       currency: currencyInput,
       method: methodInput,
       tag: tagInput,
-      exchangeRates: selectedExpense.currencies,
+      exchangeRates,
     };
 
-    valueAsk = changedExpense.exchangeRates[currencyInput].ask;
+    const newExpenses = expenses.reduce(
+      (acc, expense) => [...acc, (expense.id === idExpense ? newExpense : expense)], [],
+    );
+    console.log(newExpenses);
+    setAllExpense({ currencies, expenses: newExpenses });
+    this.setState({
+      idExpense: Number(idExpense),
+      valueInput: '0',
+    });
+  }
 
-    const newTotal = total + Number((Number(valueInput)
-    * Number(valueAsk)).toFixed(2));
-
-    // const newExpenses = getExpenses.map(
-    //   (expense) => expense.id === changedExpense.id ? changedExpense : expense
-    // );
-    console.log(changedExpense, newTotal);
-    // setExpense({ expense, total });
-    // this.setState({
-    //   idExpense: Number(idExpense) + 1,
-    //   valueInput: '0',
-    // });
+  updateCurrencyInput() {
+    const { getWallet } = this.props;
+    const { currencies } = getWallet;
+    DataSelect[0].values = Object.keys(this.removeCurrenciesNotValid(currencies));
   }
 
   removeCurrenciesNotValid(object) {
@@ -112,11 +108,23 @@ class Form extends React.Component {
     return newObject;
   }
 
+  updateFields() {
+    const { id, value, currency, description, method, tag } = this.props;
+    this.setState({
+      idExpense: id,
+      valueInput: value,
+      currencyInput: currency,
+      descriptionInput: description,
+      methodInput: method,
+      tagInput: tag,
+    });
+  }
+
   render() {
-    const { idExpense, valueInput, descriptionInput, currencyInput,
-      methodInput, tagInput } = this.state;
-    const selectValues = [currencyInput, methodInput, tagInput];
-    console.log(selectValues);
+    const { valueInput, descriptionInput,
+      currencyInput, methodInput, tagInput } = this.state;
+    const selectedItens = [currencyInput, methodInput, tagInput];
+    this.updateCurrencyInput();
     return (
       <fieldset>
         <Input
@@ -129,6 +137,17 @@ class Form extends React.Component {
           isDisabled={ false }
           label={ DataInputs[2].label }
         />
+        { DataSelect.map((select, index) => (
+          <Select
+            key={ index }
+            dataTestId={ select.dataTestId }
+            name={ select.name }
+            values={ select.values }
+            onChange={ this.handleChange }
+            label={ select.label }
+            selectedItem={ selectedItens[index] }
+          />
+        )) }
         <Input
           dataTestId={ DataInputs[3].dataTestId }
           type={ DataInputs[3].type }
@@ -139,23 +158,11 @@ class Form extends React.Component {
           isDisabled={ false }
           label={ DataInputs[3].label }
         />
-        {
-          DataSelect.map((select, index) => (
-            <Select
-              key={ index }
-              dataTestId={ select.dataTestId }
-              name={ select.name }
-              values={ select.values }
-              onChange={ this.handleChange }
-              label={ select.label }
-            />
-          ))
-        }
         <Button
           dataTestId={ DataButtons[1].dataTestId }
           type={ DataButtons[1].type }
-          name={ idExpense }
-          value={ DataButtons[1].value }
+          name={ DataButtons[1].name }
+          value="Editar despesa"
           onClick={ this.handleClick }
           isDisabled={ false }
         />
@@ -164,20 +171,23 @@ class Form extends React.Component {
   }
 }
 
-Form.propTypes = {
-  getTotalExpenses: PropTypes.number.isRequired,
-  getExpenses: PropTypes.arrayOf(PropTypes.any).isRequired,
+FormEdit.propTypes = {
+  setAllExpense: PropTypes.func.isRequired,
+  getWallet: PropTypes.objectOf(PropTypes.any).isRequired,
   id: PropTypes.number.isRequired,
   value: PropTypes.string.isRequired,
   description: PropTypes.string.isRequired,
-  currency: PropTypes.string.isRequired,
   method: PropTypes.string.isRequired,
   tag: PropTypes.string.isRequired,
+  currency: PropTypes.string.isRequired,
 };
 
-const mapStateToProps = (state) => ({
-  getTotalExpenses: state.totalExpenses,
-  getExpenses: state.wallet.expenses,
+const mapDispatchToProps = (dispatch) => ({
+  setAllExpense: (payload) => dispatch(setAllWalletExpenses(payload)),
 });
 
-export default connect(mapStateToProps, null)(Form);
+const mapStateToProps = (state) => ({
+  getWallet: state.wallet,
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(FormEdit);

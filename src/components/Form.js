@@ -81,11 +81,11 @@ class Form extends React.Component {
       exchangeRates: currencies,
     };
 
-    const valueAsk = expenses.exchangeRates[currencyInput].ask;
+    // const valueAsk = expenses.exchangeRates[currencyInput].ask;
 
-    const total = Number(this.getTotalExpenses())
-      + Number((Number(valueInput) * Number(valueAsk)).toFixed(2));
-    setExpense({ expenses, total });
+    // const total = Number(this.getTotalExpenses())
+    //   + Number((Number(valueInput) * Number(valueAsk)).toFixed(2));
+    setExpense({ expenses });
     this.setState({
       idExpense: Number(idExpense) + 1,
       valueInput: '0',
@@ -122,16 +122,6 @@ class Form extends React.Component {
           isDisabled={ false }
           label={ DataInputs[2].label }
         />
-        <Input
-          dataTestId={ DataInputs[3].dataTestId }
-          type={ DataInputs[3].type }
-          name={ DataInputs[3].name }
-          placeholder={ DataInputs[3].placeholder }
-          value={ descriptionInput }
-          onChange={ this.handleChange }
-          isDisabled={ false }
-          label={ DataInputs[3].label }
-        />
         {
           DataSelect.map((select, index) => (
             <Select
@@ -144,6 +134,16 @@ class Form extends React.Component {
             />
           ))
         }
+        <Input
+          dataTestId={ DataInputs[3].dataTestId }
+          type={ DataInputs[3].type }
+          name={ DataInputs[3].name }
+          placeholder={ DataInputs[3].placeholder }
+          value={ descriptionInput }
+          onChange={ this.handleChange }
+          isDisabled={ false }
+          label={ DataInputs[3].label }
+        />
         <Button
           dataTestId={ DataButtons[1].dataTestId }
           type={ DataButtons[1].type }
