@@ -4,7 +4,6 @@
 
 import React from 'react';
 import { connect } from 'react-redux';
-// import { Redirect } from 'react-router';
 import PropTypes from 'prop-types';
 import Header from '../components/Header';
 import Form from '../components/Form';
@@ -47,7 +46,6 @@ class Wallet extends React.Component {
   }
 
   render() {
-    // const { userEmail } = this.props;
     const {
       id,
       value,
@@ -58,8 +56,6 @@ class Wallet extends React.Component {
       isChanging,
     } = this.state;
     return (
-      // <section>
-      //   {getExpenses: PropTypes.arr.isRequired,
       <section>
         <Header />
         {
@@ -82,23 +78,9 @@ class Wallet extends React.Component {
           handleEditClick={ this.handleEditClick }
         />
       </section>
-      //       )
-      //       : <Redirect to="/" />
-      //   }
-      // </section>
     );
   }
 }
-
-// Wallet.propTypes = {
-//   userEmail: PropTypes.string.isRequired,
-// };
-
-// const mapStateToProps = (state) => ({
-//   userEmail: state.user.email,
-// });
-
-// export default connect(mapStateToProps, null)(Wallet);
 
 Wallet.propTypes = {
   getExpenses: PropTypes.arrayOf(PropTypes.any).isRequired,

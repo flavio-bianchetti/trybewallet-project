@@ -25,7 +25,7 @@ const DataButtons = [
     dataTestId: 'edit-btn',
     type: 'button',
     name: 'editBtn',
-    value: 'Editar despesa',
+    value: 'Editar',
   },
 ];
 

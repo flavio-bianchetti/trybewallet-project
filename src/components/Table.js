@@ -16,6 +16,7 @@ class Table extends React.Component {
     this.getTotalExpenses = this.getTotalExpenses.bind(this);
     this.renderRowTable = this.renderRowTable.bind(this);
     this.handleClick = this.handleClick.bind(this);
+    this.getArrayExpenses = this.getArrayExpenses.bind(this);
   }
 
   getTotalExpenses() {
@@ -26,6 +27,21 @@ class Table extends React.Component {
       0,
     );
     return totalExpenses;
+  }
+
+  getArrayExpenses(getExpenses) {
+    return getExpenses.map((expense) => ({
+      id: expense.id,
+      description: expense.description,
+      tag: expense.tag,
+      method: expense.method,
+      value: expense.value,
+      currency: (expense.exchangeRates[expense.currency].name).split('/')[0],
+      ask: (Number(expense.exchangeRates[expense.currency].ask)).toFixed(2),
+      convertion: (Number(expense.exchangeRates[expense.currency].ask)
+      * Number(expense.value)).toFixed(2),
+      currencyConvertion: 'Real',
+    }));
   }
 
   handleClick(event) {
@@ -53,10 +69,11 @@ class Table extends React.Component {
   }
 
   renderRowTable(getExpenses, handleEditClick) {
+    const expenses = this.getArrayExpenses(getExpenses);
     return (
       <tbody>
         {
-          getExpenses.map((expense) => (
+          expenses.map((expense) => (
             <tr
               key={ expense.id }
             >
@@ -64,24 +81,15 @@ class Table extends React.Component {
               <td>{ expense.tag }</td>
               <td>{ expense.method }</td>
               <td>{ expense.value }</td>
-              <td>{ (expense.exchangeRates[expense.currency].name).split('/')[0] }</td>
-              <td>
-                {
-                  `${Number(expense.exchangeRates[expense.currency].ask).toFixed(2)}`
-                }
-              </td>
-              <td>
-                {
-                  `${(Number(expense.exchangeRates[expense.currency].ask)
-                  * Number(expense.value)).toFixed(2)}`
-                }
-              </td>
-              <td>Real</td>
+              <td>{ expense.currency }</td>
+              <td>{ expense.ask }</td>
+              <td>{ expense.convertion }</td>
+              <td>{ expense.currencyConvertion }</td>
               <td>
                 <Button
                   dataTestId={ DataButtons[3].dataTestId }
                   type={ DataButtons[3].type }
-                  name={ expense.id }
+                  name={ `${expense.id}` }
                   value={ DataButtons[3].value }
                   onClick={ handleEditClick }
                   isDisabled={ false }
@@ -89,7 +97,7 @@ class Table extends React.Component {
                 <Button
                   dataTestId={ DataButtons[2].dataTestId }
                   type={ DataButtons[2].type }
-                  name={ expense.id }
+                  name={ `${expense.id}` }
                   value={ DataButtons[2].value }
                   onClick={ this.handleClick }
                   isDisabled={ false }

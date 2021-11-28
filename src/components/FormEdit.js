@@ -10,7 +10,6 @@ import Select from '../elements/Select';
 import Button from '../elements/Button';
 import DataInputs from '../data/DataInputs';
 import DataSelect from '../data/DataSelect';
-import DataButtons from '../data/DataButtons';
 import { setAllWalletExpenses } from '../actions/index';
 
 class FormEdit extends React.Component {
@@ -22,14 +21,16 @@ class FormEdit extends React.Component {
       currencyInput: 'USD',
       methodInput: 'Dinheiro',
       tagInput: 'Alimentação',
+      dataSelect: ['USD', 'CAD', 'EUR', 'GBP', 'ARS', 'BTC', 'LTC', 'JPY',
+        'CHF', 'AUD', 'CNY', 'ILS', 'ETH', 'XRP'],
     };
 
     this.getTotalExpenses = this.getTotalExpenses.bind(this);
     this.handleChange = this.handleChange.bind(this);
     this.handleClick = this.handleClick.bind(this);
-    this.updateCurrencyInput = this.updateCurrencyInput.bind(this);
     this.removeCurrenciesNotValid = this.removeCurrenciesNotValid.bind(this);
     this.updateFields = this.updateFields.bind(this);
+    this.renderButton = this.renderButton.bind(this);
   }
 
   componentDidMount() {
@@ -85,18 +86,11 @@ class FormEdit extends React.Component {
     const newExpenses = expenses.reduce(
       (acc, expense) => [...acc, (expense.id === idExpense ? newExpense : expense)], [],
     );
-    console.log(newExpenses);
     setAllExpense({ currencies, expenses: newExpenses });
     this.setState({
       idExpense: Number(idExpense),
       valueInput: '0',
     });
-  }
-
-  updateCurrencyInput() {
-    const { getWallet } = this.props;
-    const { currencies } = getWallet;
-    DataSelect[0].values = Object.keys(this.removeCurrenciesNotValid(currencies));
   }
 
   removeCurrenciesNotValid(object) {
@@ -120,11 +114,23 @@ class FormEdit extends React.Component {
     });
   }
 
+  renderButton() {
+    return (
+      <Button
+        dataTestId="edit-btn"
+        type="button"
+        name="editBtn"
+        value="Editar despesa"
+        onClick={ this.handleClick }
+        isDisabled={ false }
+      />
+    );
+  }
+
   render() {
     const { valueInput, descriptionInput,
-      currencyInput, methodInput, tagInput } = this.state;
+      currencyInput, methodInput, tagInput, dataSelect } = this.state;
     const selectedItens = [currencyInput, methodInput, tagInput];
-    this.updateCurrencyInput();
     return (
       <fieldset>
         <Input
@@ -142,7 +148,7 @@ class FormEdit extends React.Component {
             key={ index }
             dataTestId={ select.dataTestId }
             name={ select.name }
-            values={ select.values }
+            values={ index === 0 ? dataSelect : select.values }
             onChange={ this.handleChange }
             label={ select.label }
             selectedItem={ selectedItens[index] }
@@ -158,14 +164,7 @@ class FormEdit extends React.Component {
           isDisabled={ false }
           label={ DataInputs[3].label }
         />
-        <Button
-          dataTestId={ DataButtons[1].dataTestId }
-          type={ DataButtons[1].type }
-          name={ DataButtons[1].name }
-          value="Editar despesa"
-          onClick={ this.handleClick }
-          isDisabled={ false }
-        />
+        { this.renderButton() }
       </fieldset>
     );
   }

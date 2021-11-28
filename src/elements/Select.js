@@ -30,7 +30,7 @@ class Select extends React.Component {
                 key={ index }
                 data-testid={ value }
                 value={ value }
-                selected={ selectedItem === value }
+                defaultValue={ selectedItem === value }
               >
                 { value }
               </option>

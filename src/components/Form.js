@@ -81,10 +81,6 @@ class Form extends React.Component {
       exchangeRates: currencies,
     };
 
-    // const valueAsk = expenses.exchangeRates[currencyInput].ask;
-
-    // const total = Number(this.getTotalExpenses())
-    //   + Number((Number(valueInput) * Number(valueAsk)).toFixed(2));
     setExpense({ expenses });
     this.setState({
       idExpense: Number(idExpense) + 1,
@@ -108,7 +104,9 @@ class Form extends React.Component {
   }
 
   render() {
-    const { valueInput, descriptionInput } = this.state;
+    const { valueInput, descriptionInput,
+      currencyInput, methodInput, tagInput } = this.state;
+    const selectedItens = [currencyInput, methodInput, tagInput];
     this.updateCurrencyInput();
     return (
       <fieldset>
@@ -122,18 +120,17 @@ class Form extends React.Component {
           isDisabled={ false }
           label={ DataInputs[2].label }
         />
-        {
-          DataSelect.map((select, index) => (
-            <Select
-              key={ index }
-              dataTestId={ select.dataTestId }
-              name={ select.name }
-              values={ select.values }
-              onChange={ this.handleChange }
-              label={ select.label }
-            />
-          ))
-        }
+        { DataSelect.map((select, index) => (
+          <Select
+            key={ index }
+            dataTestId={ select.dataTestId }
+            name={ select.name }
+            values={ select.values }
+            onChange={ this.handleChange }
+            label={ select.label }
+            selectedItem={ selectedItens[index] }
+          />
+        ))}
         <Input
           dataTestId={ DataInputs[3].dataTestId }
           type={ DataInputs[3].type }
