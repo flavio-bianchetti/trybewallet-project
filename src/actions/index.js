@@ -4,13 +4,10 @@
 // da Trybe, consultas às documentações oficiais e com conhecimentos prévios do
 // autor. Demais consultas serão discriminadas abaixo em forma de link.
 
-import USER_EMAIL from '../reducers/user';
-import {
-  USER_WALLET_CURRENCIES,
-  USER_WALLET_EXPENSES,
-  USER_ALL_WALLET_EXPENSES,
-} from '../reducers/wallet';
-import TOTAL_EXPENSES from '../reducers/total';
+export const USER_EMAIL = 'USER_EMAIL';
+export const USER_WALLET_CURRENCIES = 'USER_WALLET_CURRENCIES';
+export const USER_WALLET_EXPENSES = 'USER_WALLET_EXPENSES';
+export const USER_ALL_WALLET_EXPENSES = 'USER_ALL_WALLET_EXPENSES';
 
 export const setUserEmail = (payload) => ({
   type: USER_EMAIL,
@@ -29,11 +26,6 @@ export const setWalletExpenses = (payload) => ({
 
 export const setAllWalletExpenses = (payload) => ({
   type: USER_ALL_WALLET_EXPENSES,
-  payload,
-});
-
-export const setTotalExpenses = (payload) => ({
-  type: TOTAL_EXPENSES,
   payload,
 });
 

@@ -13,14 +13,25 @@ class Table extends React.Component {
   constructor() {
     super();
 
+    this.getTotalExpenses = this.getTotalExpenses.bind(this);
     this.renderRowTable = this.renderRowTable.bind(this);
     this.handleClick = this.handleClick.bind(this);
+  }
+
+  getTotalExpenses() {
+    const { getExpenses } = this.props;
+    const totalExpenses = getExpenses.reduce(
+      (acc, expense) => acc + Number((Number(expense.value)
+      * Number(expense.exchangeRates[expense.currency].ask)).toFixed(2)),
+      0,
+    );
+    return totalExpenses;
   }
 
   handleClick(event) {
     event.preventDefault();
     const { name } = event.target;
-    const { getExpenses, getTotalExpenses, setNewExpenses } = this.props;
+    const { getExpenses, setNewExpenses } = this.props;
     const selectedExpense = getExpenses.find(
       (expense) => expense.id === Number(name),
     );
@@ -37,7 +48,7 @@ class Table extends React.Component {
 
     setNewExpenses({
       expenses: newExpenses,
-      total: Number(getTotalExpenses) - valueDecreased,
+      total: Number(this.getTotalExpenses()) - valueDecreased,
     });
   }
 
@@ -118,19 +129,16 @@ class Table extends React.Component {
 
 Table.propTypes = {
   getExpenses: PropTypes.arrayOf(PropTypes.any).isRequired,
-  getTotalExpenses: PropTypes.number.isRequired,
   setNewExpenses: PropTypes.func.isRequired,
   handleEditClick: PropTypes.func.isRequired,
 };
 
 const mapStateToProps = (state) => ({
   getExpenses: state.wallet.expenses,
-  getTotalExpenses: state.totalExpenses,
 });
 
 const mapDispatchToProps = (dispatch) => ({
   setNewExpenses: (payload) => dispatch(setAllWalletExpenses(payload)),
-  // changingId: (payload) => dispatch(setChangingId(payload)),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(Table);

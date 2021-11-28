@@ -25,6 +25,7 @@ class Form extends React.Component {
       tagInput: 'Alimentação',
     };
 
+    this.getTotalExpenses = this.getTotalExpenses.bind(this);
     this.handleChange = this.handleChange.bind(this);
     this.handleClick = this.handleClick.bind(this);
     this.updateCurrencyInput = this.updateCurrencyInput.bind(this);
@@ -34,6 +35,17 @@ class Form extends React.Component {
   componentDidMount() {
     const { setExchangeRates } = this.props;
     setExchangeRates();
+  }
+
+  getTotalExpenses() {
+    const { getWallet } = this.props;
+    const { expenses } = getWallet;
+    const totalExpenses = expenses.reduce(
+      (acc, expense) => acc + Number((Number(expense.value)
+      * Number(expense.exchangeRates[expense.currency].ask)).toFixed(2)),
+      0,
+    );
+    return totalExpenses;
   }
 
   handleChange(event) {
@@ -55,7 +67,8 @@ class Form extends React.Component {
       tagInput,
     } = this.state;
 
-    const { currencies, setExpense, setExchangeRates, getTotalExpenses } = this.props;
+    const { getWallet, setExpense, setExchangeRates } = this.props;
+    const { currencies } = getWallet;
     setExchangeRates();
 
     const expenses = {
@@ -70,7 +83,7 @@ class Form extends React.Component {
 
     const valueAsk = expenses.exchangeRates[currencyInput].ask;
 
-    const total = Number(getTotalExpenses)
+    const total = Number(this.getTotalExpenses())
       + Number((Number(valueInput) * Number(valueAsk)).toFixed(2));
     setExpense({ expenses, total });
     this.setState({
@@ -80,7 +93,8 @@ class Form extends React.Component {
   }
 
   updateCurrencyInput() {
-    const { currencies } = this.props;
+    const { getWallet } = this.props;
+    const { currencies } = getWallet;
     DataSelect[0].values = Object.keys(this.removeCurrenciesNotValid(currencies));
   }
 
@@ -146,8 +160,7 @@ class Form extends React.Component {
 Form.propTypes = {
   setExpense: PropTypes.func.isRequired,
   setExchangeRates: PropTypes.func.isRequired,
-  currencies: PropTypes.arrayOf(PropTypes.any).isRequired,
-  getTotalExpenses: PropTypes.number.isRequired,
+  getWallet: PropTypes.objectOf(PropTypes.any).isRequired,
 };
 
 const mapDispatchToProps = (dispatch) => ({
@@ -156,8 +169,7 @@ const mapDispatchToProps = (dispatch) => ({
 });
 
 const mapStateToProps = (state) => ({
-  currencies: state.wallet.currencies,
-  getTotalExpenses: state.totalExpenses,
+  getWallet: state.wallet,
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(Form);

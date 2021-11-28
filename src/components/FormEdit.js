@@ -26,7 +26,6 @@ class Form extends React.Component {
 
     this.handleChange = this.handleChange.bind(this);
     this.handleClick = this.handleClick.bind(this);
-    // this.updateCurrencyInput = this.updateCurrencyInput.bind(this);
     this.removeCurrenciesNotValid = this.removeCurrenciesNotValid.bind(this);
     this.setFieldsForEdit = this.setFieldsForEdit.bind(this);
   }
@@ -117,7 +116,7 @@ class Form extends React.Component {
     const { idExpense, valueInput, descriptionInput, currencyInput,
       methodInput, tagInput } = this.state;
     const selectValues = [currencyInput, methodInput, tagInput];
-    console.log(selectValues); // parei aqui.
+    console.log(selectValues);
     return (
       <fieldset>
         <Input
@@ -166,12 +165,7 @@ class Form extends React.Component {
 }
 
 Form.propTypes = {
-//   setExpense: PropTypes.func.isRequired,
-//   setExchangeRates: PropTypes.func.isRequired,
-  // warning na linha abaixo será tratado antes da entrega final.
-//   currencies: PropTypes.arrayOf(PropTypes.any).isRequired,
   getTotalExpenses: PropTypes.number.isRequired,
-  // changingId: PropTypes.number.isRequired,
   getExpenses: PropTypes.arrayOf(PropTypes.any).isRequired,
   id: PropTypes.number.isRequired,
   value: PropTypes.string.isRequired,
@@ -181,15 +175,8 @@ Form.propTypes = {
   tag: PropTypes.string.isRequired,
 };
 
-// const mapDispatchToProps = (dispatch) => ({
-// //   setExpense: (payload) => dispatch(setWalletExpenses(payload)),
-// //   setExchangeRates: () => dispatch(fetchExchangeRates()),
-// });
-
 const mapStateToProps = (state) => ({
-//   currencies: state.wallet.currencies,
   getTotalExpenses: state.totalExpenses,
-  // changingId: state.changingId,
   getExpenses: state.wallet.expenses,
 });
 
