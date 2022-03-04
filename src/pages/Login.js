@@ -66,8 +66,12 @@ class Login extends React.Component {
       isPasswordValid,
     } = this.state;
     return (
-      <div>
+      <div
+        className="flex flex-col items-center justify-center h-screen bg-gray-100"
+      >
         <Input
+          classNameLabel={ DataInputs[0].classNameLabel }
+          classNameInput={ DataInputs[0].classNameInput }
           dataTestId={ DataInputs[0].dataTestId }
           type={ DataInputs[0].type }
           name={ DataInputs[0].name }
@@ -78,6 +82,8 @@ class Login extends React.Component {
           label={ DataInputs[0].label }
         />
         <Input
+          classNameLabel={ DataInputs[0].classNameLabel }
+          classNameInput={ DataInputs[0].classNameInput }
           dataTestId={ DataInputs[1].dataTestId }
           type={ DataInputs[1].type }
           name={ DataInputs[1].name }
@@ -88,6 +94,7 @@ class Login extends React.Component {
           label={ DataInputs[1].label }
         />
         <Button
+          className={ DataButtons[0].className }
           dataTestId={ DataButtons[0].dataTestId }
           type={ DataButtons[0].type }
           name={ DataButtons[0].name }
