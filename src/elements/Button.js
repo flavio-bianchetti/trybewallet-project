@@ -14,9 +14,11 @@ class Button extends React.Component {
       value,
       isDisabled,
       onClick,
+      className,
     } = this.props;
     return (
       <input
+        className={ className }
         data-testid={ dataTestId }
         name={ name }
         type={ type }
@@ -35,6 +37,7 @@ Button.propTypes = {
   value: PropTypes.string.isRequired,
   isDisabled: PropTypes.bool.isRequired,
   onClick: PropTypes.func.isRequired,
+  className: PropTypes.string.isRequired,
 };
 
 export default Button;

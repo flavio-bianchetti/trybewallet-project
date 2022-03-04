@@ -16,11 +16,17 @@ class Input extends React.Component {
       isDisabled,
       onChange,
       label,
+      classNameLabel,
+      classNameInput,
     } = this.props;
     return (
-      <label htmlFor={ name }>
+      <label
+        className={ classNameLabel }
+        htmlFor={ name }
+      >
         { label }
         <input
+          className={ classNameInput }
           data-testid={ dataTestId }
           name={ name }
           id={ name }
@@ -44,6 +50,8 @@ Input.propTypes = {
   isDisabled: PropTypes.bool.isRequired,
   onChange: PropTypes.func.isRequired,
   label: PropTypes.string.isRequired,
+  classNameLabel: PropTypes.string.isRequired,
+  classNameInput: PropTypes.string.isRequired,
 };
 
 export default Input;
