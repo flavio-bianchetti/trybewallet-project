@@ -10,7 +10,9 @@ import Select from '../elements/Select';
 import Button from '../elements/Button';
 import DataInputs from '../data/DataInputs';
 import DataSelect from '../data/DataSelect';
+import DataButtons from '../data/DataButtons';
 import { setAllWalletExpenses } from '../actions/index';
+import DataFieldset from '../data/DataFieldset';
 
 class FormEdit extends React.Component {
   constructor() {
@@ -117,6 +119,8 @@ class FormEdit extends React.Component {
   renderButton() {
     return (
       <Button
+        className={ DataButtons[1].className }
+        // dataTestId={ DataButtons[1].dataTestId }
         dataTestId="edit-btn"
         type="button"
         name="editBtn"
@@ -132,8 +136,12 @@ class FormEdit extends React.Component {
       currencyInput, methodInput, tagInput, dataSelect } = this.state;
     const selectedItens = [currencyInput, methodInput, tagInput];
     return (
-      <fieldset>
+      <fieldset
+        className={ DataFieldset[0].className }
+      >
         <Input
+          classNameLabel={ DataInputs[2].classNameLabel }
+          classNameInput={ DataInputs[2].classNameInput }
           dataTestId={ DataInputs[2].dataTestId }
           type={ DataInputs[2].type }
           name={ DataInputs[2].name }
@@ -146,6 +154,8 @@ class FormEdit extends React.Component {
         { DataSelect.map((select, index) => (
           <Select
             key={ index }
+            classNameSelect={ select.classNameSelect }
+            classNameLabel={ select.classNameLabel }
             dataTestId={ select.dataTestId }
             name={ select.name }
             values={ index === 0 ? dataSelect : select.values }
@@ -155,6 +165,8 @@ class FormEdit extends React.Component {
           />
         )) }
         <Input
+          classNameLabel={ DataInputs[3].classNameLabel }
+          classNameInput={ DataInputs[3].classNameInput }
           dataTestId={ DataInputs[3].dataTestId }
           type={ DataInputs[3].type }
           name={ DataInputs[3].name }

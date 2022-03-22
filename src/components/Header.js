@@ -5,6 +5,9 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
+import DataHeader from '../data/DataHeader';
+
+const { className, textColor } = DataHeader;
 
 class Header extends React.Component {
   constructor() {
@@ -26,16 +29,35 @@ class Header extends React.Component {
   render() {
     const { userEmail } = this.props;
     return (
-      <header>
-        <span data-testid="email-field">
-          { userEmail }
-        </span>
-        <span data-testid="total-field">
-          { this.getTotalExpenses() }
-        </span>
-        <span data-testid="header-currency-field">
-          { ' BRL' }
-        </span>
+      <header
+        className={ className }
+      >
+        <div
+          className={ `${textColor} flex flex-grow justify-start pl-6` }
+        >
+          <span
+            className={ textColor }
+            data-testid="email-field"
+          >
+            { userEmail }
+          </span>
+        </div>
+        <div
+          className={ `${textColor} flex flex-grow justify-end pr-6` }
+        >
+          <span
+            className={ textColor }
+            data-testid="total-field"
+          >
+            { this.getTotalExpenses() }
+          </span>
+          <span
+            className={ textColor }
+            data-testid="header-currency-field"
+          >
+            { ' BRL' }
+          </span>
+        </div>
       </header>
     );
   }

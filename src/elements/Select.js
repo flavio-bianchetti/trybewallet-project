@@ -14,11 +14,17 @@ class Select extends React.Component {
       onChange,
       label,
       selectedItem,
+      classNameLabel,
+      classNameSelect,
     } = this.props;
     return (
-      <label htmlFor={ name }>
+      <label
+        htmlFor={ name }
+        className={ classNameLabel }
+      >
         { label }
         <select
+          className={ classNameSelect }
           data-testid={ dataTestId }
           name={ name }
           id={ name }
@@ -49,6 +55,8 @@ Select.propTypes = {
   onChange: PropTypes.func.isRequired,
   label: PropTypes.string.isRequired,
   selectedItem: PropTypes.string.isRequired,
+  classNameLabel: PropTypes.string.isRequired,
+  classNameSelect: PropTypes.string.isRequired,
 };
 
 export default Select;

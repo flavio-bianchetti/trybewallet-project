@@ -1,10 +1,12 @@
 const DefaultValues = {
   defaultBGColor: 'bg-violet-400',
-  defaultBGColorHover: 'bg-violet-500',
-  defaultTextColor: 'text-violet-600',
-  defaultTextBGColor: 'text-white',
-  defaultBorderFocusColor: 'border-violet-500',
-  defaultBGWhite: 'bg-white',
+  mediumBGColor: 'bg-violet-500',
+  defaultBGColorHover: 'hover:bg-violet-500',
+  mediumBGColorHover: 'hover:bg-violet-600',
+  defaultTextColor: 'text-white',
+  defaultBorderFocusColor: 'focus:border-violet-500',
+  defaultContrastTextColor: 'text-violet-600',
+  defaultContrastBGColor: 'bg-white',
 };
 
 export default DefaultValues;

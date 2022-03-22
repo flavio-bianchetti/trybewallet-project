@@ -9,6 +9,10 @@ import Button from '../elements/Button';
 import DataButtons from '../data/DataButtons';
 import { setAllWalletExpenses } from '../actions/index';
 
+import DataTable from '../data/DataTable';
+
+const { classNameHeader } = DataTable;
+
 class Table extends React.Component {
   constructor() {
     super();
@@ -70,8 +74,11 @@ class Table extends React.Component {
 
   renderRowTable(getExpenses, handleEditClick) {
     const expenses = this.getArrayExpenses(getExpenses);
+    console.log(expenses);
     return (
-      <tbody>
+      <tbody
+        className="text-center bg-white text-violet-600"
+      >
         {
           expenses.map((expense) => (
             <tr
@@ -87,6 +94,7 @@ class Table extends React.Component {
               <td>{ expense.currencyConvertion }</td>
               <td>
                 <Button
+                  className={ DataButtons[3].className }
                   dataTestId={ DataButtons[3].dataTestId }
                   type={ DataButtons[3].type }
                   name={ `${expense.id}` }
@@ -95,6 +103,7 @@ class Table extends React.Component {
                   isDisabled={ false }
                 />
                 <Button
+                  className={ DataButtons[2].className }
                   dataTestId={ DataButtons[2].dataTestId }
                   type={ DataButtons[2].type }
                   name={ `${expense.id}` }
@@ -115,7 +124,9 @@ class Table extends React.Component {
     return (
       // A estrutura de Table foi relembrada neste link:
       // https://www.w3schools.com/html/html_tables.asp
-      <table>
+      <table
+        className={ classNameHeader }
+      >
         <thead>
           <tr>
             <th>Descrição</th>

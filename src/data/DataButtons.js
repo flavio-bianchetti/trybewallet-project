@@ -7,33 +7,38 @@ import DefaultValues from './DefaultValues';
 const {
   defaultBGColor,
   defaultBGColorHover,
+  mediumBGColor,
+  mediumBGColorHover,
 } = DefaultValues;
 
 const DataButtons = [
   {
     className: `${defaultBGColor} m-2 p-1 rounded-md w-64 shadow-md
-      holver:outline-none hover:${defaultBGColorHover} text-white`,
+    hover:outline-none ${defaultBGColorHover} text-white`,
     dataTestId: 'button-login-input',
     type: 'button',
     name: 'buttonLoginInput',
     value: 'Entrar',
   },
   {
-    className: '',
+    className: `${mediumBGColor} m-2 p-1 rounded-md w-42 shadow-md
+    hover:outline-none ${mediumBGColorHover} text-white`,
     dataTestId: 'button-add-expense-input',
     type: 'button',
     name: 'buttonAddExpenseInput',
     value: 'Adicionar despesa',
   },
   {
-    className: '',
+    className: `${defaultBGColor} m-2 p-1 rounded-md shadow-md
+    hover:outline-none ${defaultBGColorHover} text-white`,
     dataTestId: 'delete-btn',
     type: 'button',
     name: 'deleteBtn',
     value: 'Remover',
   },
   {
-    className: '',
+    className: `${defaultBGColor} m-2 p-1 rounded-md shadow-md
+    hover:outline-none ${defaultBGColorHover} text-white`,
     dataTestId: 'edit-btn',
     type: 'button',
     name: 'editBtn',

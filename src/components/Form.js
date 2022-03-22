@@ -12,6 +12,7 @@ import DataInputs from '../data/DataInputs';
 import DataSelect from '../data/DataSelect';
 import DataButtons from '../data/DataButtons';
 import { setWalletExpenses, fetchExchangeRates } from '../actions/index';
+import DataFieldset from '../data/DataFieldset';
 
 class Form extends React.Component {
   constructor() {
@@ -30,6 +31,7 @@ class Form extends React.Component {
     this.handleClick = this.handleClick.bind(this);
     this.updateCurrencyInput = this.updateCurrencyInput.bind(this);
     this.removeCurrenciesNotValid = this.removeCurrenciesNotValid.bind(this);
+    this.renderInput = this.renderInput.bind(this);
   }
 
   componentDidMount() {
@@ -103,26 +105,38 @@ class Form extends React.Component {
     return newObject;
   }
 
+  renderInput(dataInputs, valueInput, handleChange) {
+    return (
+      <Input
+        classNameLabel={ dataInputs.classNameLabel }
+        classNameInput={ dataInputs.classNameInput }
+        dataTestId={ dataInputs.dataTestId }
+        type={ dataInputs.type }
+        name={ dataInputs.name }
+        placeholder={ dataInputs.placeholder }
+        value={ valueInput }
+        onChange={ handleChange }
+        isDisabled={ false }
+        label={ dataInputs.label }
+      />
+    );
+  }
+
   render() {
     const { valueInput, descriptionInput,
       currencyInput, methodInput, tagInput } = this.state;
     const selectedItens = [currencyInput, methodInput, tagInput];
     this.updateCurrencyInput();
     return (
-      <fieldset>
-        <Input
-          dataTestId={ DataInputs[2].dataTestId }
-          type={ DataInputs[2].type }
-          name={ DataInputs[2].name }
-          placeholder={ DataInputs[2].placeholder }
-          value={ valueInput }
-          onChange={ this.handleChange }
-          isDisabled={ false }
-          label={ DataInputs[2].label }
-        />
+      <fieldset
+        className={ DataFieldset[0].className }
+      >
+        { this.renderInput(DataInputs[2], valueInput, this.handleChange) }
         { DataSelect.map((select, index) => (
           <Select
             key={ index }
+            classNameSelect={ select.classNameSelect }
+            classNameLabel={ select.classNameLabel }
             dataTestId={ select.dataTestId }
             name={ select.name }
             values={ select.values }
@@ -131,17 +145,9 @@ class Form extends React.Component {
             selectedItem={ selectedItens[index] }
           />
         ))}
-        <Input
-          dataTestId={ DataInputs[3].dataTestId }
-          type={ DataInputs[3].type }
-          name={ DataInputs[3].name }
-          placeholder={ DataInputs[3].placeholder }
-          value={ descriptionInput }
-          onChange={ this.handleChange }
-          isDisabled={ false }
-          label={ DataInputs[3].label }
-        />
+        { this.renderInput(DataInputs[3], descriptionInput, this.handleChange) }
         <Button
+          className={ DataButtons[1].className }
           dataTestId={ DataButtons[1].dataTestId }
           type={ DataButtons[1].type }
           name={ DataButtons[1].name }

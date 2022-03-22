@@ -1,8 +1,8 @@
 # Trybe - Trybewallet
 
-This repository contains the "_Trybewallet_" project, (....). The objective proposed in this project is (...).
+This repository contains the "_Trybewallet_" project, which consists of a spending control wallet with currency converter. The objective proposed in this project is the development of an application in React that uses Redux for state manipulation.
 
-![flavio-bianchetti-trybewarts-project](https://docs.google.com/uc?id=)
+![flavio-bianchetti-trybewarts-project](https://docs.google.com/uc?id=1lMOhIrcIVQjrmq6tg81EatnrTDOPGblW)
 
 ---
 
@@ -39,11 +39,12 @@ You can find the project's original GitHub _[here](https://github.com/tryber/sd-
 
 ### Author's considerations:
 
-- The objective of putting into practice the knowledge learned about (...).
-- The styling was done by _Flávio Bianchetti_.
+- The objective of this project is to put into practice the knowledge learned in Redux, such as creating stores, reducers, asynchronous actions, dispatchers and how to connect to React components.
+- The styling is in the initial phase and is being done using _[Tailwindcss](https://tailwindcss.com/)_.
+- The project has several errors and needs refactoring.
 - There is no schedule of changes planned for this project.
 
-You can see the result of this project _[here]()_.
+You can see the result of this project _[here](https://trybewallet-project.surge.sh/)_.
 
 ---
 
@@ -54,7 +55,7 @@ by _[Flávio Bianchetti - 2021](https://github.com/flavio-bianchetti)_.
 
 # Versão em português - Trybe - Trybewallet
 
-Este repositório contém o projeto "_Trybewallet_", (...). O objetivo proposto neste projeto (...).
+Este repositório contém o projeto "_Trybewallet_", que consiste em uma carteira de controle de gastos, com conversor de moedas. O objetivo proposto neste projeto é o desenvolvimento de uma aplicação em React que utilize o Redux para manipulação de estado.
 
 _Acima, na versão em inglês, é exibida a imagem da página do projeto._
 
@@ -90,11 +91,12 @@ Você pode encontrar o GitHub original do projeto _[aqui](https://github.com/try
 ---
 ### Considerações do autor:
 
-- O objetivo de colocar em prática os conhecimentos aprendidos (...).
-- A estilização foi feita por _Flávio Bianchetti_.
+- O objetivo deste projeto é colocar em prática os conhecimentos aprendidos em Redux, como a criação de store, reducers, actions assíncronas, dispatchers e como fazer a conexão com os componentes React.
+- A estilização está na fase inicial e está sendo feita com a utilização de _[Tailwindcss](https://tailwindcss.com/)_. 
+- O projeto possui vários erros e necessita de refatoração.
 - Não há calendário de alterações previstas para este projeto.
 
-Você pode ver o resultado deste projeto _[aqui]()_.
+Você pode ver o resultado deste projeto _[aqui](https://trybewallet-project.surge.sh/)_.
 
 ---
 

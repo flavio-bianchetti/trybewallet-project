@@ -23,6 +23,7 @@ class Wallet extends React.Component {
       isChanging: false,
     };
     this.handleEditClick = this.handleEditClick.bind(this);
+    this.handleChanged = this.handleChanged.bind(this);
   }
 
   handleEditClick(event) {
@@ -43,6 +44,14 @@ class Wallet extends React.Component {
         isChanging: true,
       });
     }
+  }
+
+  handleChanged(event) {
+    event.preventDefault();
+    const { isChanging } = this.state;
+    this.setState({
+      isChanging: !isChanging,
+    });
   }
 
   render() {
@@ -68,6 +77,7 @@ class Wallet extends React.Component {
                 currency={ currency }
                 method={ method }
                 tag={ tag }
+                handleChanged={ this.handleChanged }
               />
             )
             : (

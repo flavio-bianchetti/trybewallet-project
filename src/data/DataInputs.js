@@ -6,20 +6,22 @@ import DefaultValues from './DefaultValues';
 
 const {
   defaultBGColor,
-  defaultTextBGColor,
-  defaultBGWhite,
-  defaultBorderFocusColor,
   defaultTextColor,
+  defaultContrastBGColor,
+  defaultBorderFocusColor,
+  defaultContrastTextColor,
 } = DefaultValues;
+
+const labelValues = 'm-2 p-1 rounded-md w-64';
+const inputValues = `placeholder:italic placeholder:text-slate-300
+${defaultContrastBGColor} border shadow-sm rounded-md pl-2 m-2
+focus:outline-none ${defaultBorderFocusColor} focus:ring-1
+text-sm ${defaultContrastTextColor}`;
 
 const DataInputs = [
   {
-    classNameLabel: `${defaultBGColor} ${defaultTextBGColor}
-    m-2 p-1 rounded-md w-64 shadow-md`,
-    classNameInput: `placeholder:italic placeholder:text-slate-300
-    block ${defaultBGWhite} w-56 border shadow-sm rounded-md pl-2 m-2
-    focus:outline-none focus:${defaultBorderFocusColor} focus:ring-1
-    text-sm ${defaultTextColor}`,
+    classNameLabel: `${defaultBGColor} ${defaultTextColor} ${labelValues}  shadow-md`,
+    classNameInput: `${inputValues} w-56`,
     dataTestId: 'email-input',
     type: 'email',
     name: 'email',
@@ -28,12 +30,8 @@ const DataInputs = [
     label: 'E-mail: ',
   },
   {
-    classNameLabel: `${defaultBGColor} ${defaultTextBGColor}
-    m-2 p-1 rounded-md w-64 shadow-md`,
-    classNameInput: `placeholder:italic placeholder:text-slate-300
-    block ${defaultBGWhite} w-56 border shadow-sm rounded-md pl-2 m-2
-    focus:outline-none focus:${defaultBorderFocusColor} focus:ring-1
-    text-sm ${defaultTextColor}`,
+    classNameLabel: `${defaultBGColor} ${defaultTextColor} ${labelValues}  shadow-md`,
+    classNameInput: `${inputValues} w-56`,
     dataTestId: 'password-input',
     type: 'password',
     name: 'passwordInput',
@@ -42,8 +40,8 @@ const DataInputs = [
     label: 'Senha: ',
   },
   {
-    classNameLabel: '',
-    classNameInput: '',
+    classNameLabel: `${defaultTextColor} ${labelValues}`,
+    classNameInput: `${inputValues} w-24`,
     dataTestId: 'value-input',
     type: 'number',
     name: 'valueInput',
@@ -52,8 +50,8 @@ const DataInputs = [
     label: 'Valor: ',
   },
   {
-    classNameLabel: '',
-    classNameInput: '',
+    classNameLabel: `${defaultTextColor} ${labelValues}`,
+    classNameInput: `${inputValues} w-56`,
     dataTestId: 'description-input',
     type: 'text',
     name: 'descriptionInput',
